@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Digital - Tema Neon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --neon-blue: #0ff;
+            --dark-bg: #0a0a14;
+            --darker-bg: #050508;
+            --card-bg: rgba(15, 15, 30, 0.8);
+            --text-color: #e0e0ff;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 100, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 200, 255, 0.1) 0%, transparent 20%);
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding-bottom: 40px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            border-radius: 0 0 10px 10px;
+            background: var(--darker-bg);
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            color: var(--neon-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            text-shadow: 0 0 20px var(--neon-blue);
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+        }
+        
+        .tab-btn:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        .tab-btn.active {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+        
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .qris-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .qris-code {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(145deg, #0a0a1a, #121230);
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .qris-code:hover {
+            transform: scale(1.05);
+        }
+        
+        .qris-icon {
+            font-size: 4rem;
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+        }
+        
+        .qris-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        
+        .instructions {
+            background: rgba(10, 10, 30, 0.6);
+            border: 1px solid var(--neon-blue);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+        
+        .instructions h3 {
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            text-shadow: 0 0 3px var(--neon-blue);
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .ewallet-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .ewallet-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
+            background: rgba(10, 10, 30, 0.6);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .ewallet-btn:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        .ewallet-logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+        
+        .payment-details {
+            background: rgba(10, 10, 30, 0.6);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        
+        .payment-details h3 {
+            color: var(--neon-blue);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: var(--neon-blue);
+        }
+        
+        .info-value {
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .copy-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            color: #a0a0ff;
+            font-size: 0.9rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 15px 25px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 2s ease;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; top: 0; }
+            10% { opacity: 1; top: 20px; }
+            90% { opacity: 1; top: 20px; }
+            100% { opacity: 0; top: 0; }
+        }
+        
+        /* Tombol Customer Service */
+        .cs-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #00ffe7, #00b3a0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 255, 231, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .cs-button:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0, 255, 231, 0.6);
+            background: linear-gradient(135deg, #00ffd9, #00c8b0);
+        }
+        
+        .cs-button i {
+            font-size: 32px;
+            color: #0a0a0a;
+            transition: transform 0.3s ease;
+        }
+        
+        .cs-button:hover i {
+            transform: scale(1.2);
+        }
+        
+        .cs-tooltip {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(10, 10, 10, 0.9);
+            color: #00ffe7;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ffe7;
+        }
+        
+        .cs-button:hover .cs-tooltip {
+            opacity: 1;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 231, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 255, 231, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 231, 0);
+            }
+        }
+        
+        .cs-button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+        
+        /* Modal Customer Service */
+        .cs-modal {
+            display: none;
+            position: fixed;
+            bottom: 120px;
+            left: 40px;
+            width: 300px;
+            background-color: #121212;
+            border: 1px solid #00ffe7;
+            border-radius: 15px;
+            z-index: 1001;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .cs-modal-header {
+            background: linear-gradient(90deg, #00ffe7, #007a6e);
+            padding: 15px;
+            color: #0a0a0a;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cs-modal-close {
+            cursor: pointer;
+            font-size: 22px;
+        }
+        
+        .cs-modal-body {
+            padding: 20px;
+        }
+        
+        .cs-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .cs-option:hover {
+            background-color: #222;
+            border-color: #00ffe7;
+            transform: translateX(5px);
+        }
+        
+        .cs-option i {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #00ffe7;
+        }
+        
+        .cs-option .cs-text {
+            flex-grow: 1;
+        }
+        
+        .cs-option .cs-text h4 {
+            margin: 0;
+            color: #00ffe7;
+        }
+        
+        .cs-option .cs-text p {
+            margin: 5px 0 0;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .cs-option .arrow {
+            font-size: 20px;
+            color: #00ffe7;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .ewallet-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-btn {
+                padding: 12px;
+                font-size: 1rem;
+            }
+            
+            .cs-button {
+                width: 60px;
+                height: 60px;
+                bottom: 20px;
+                left: 20px;
+            }
+            
+            .cs-modal {
+                left: 20px;
+                width: 280px;
+            }
+        }
+        
+        /* Tombol Unduh QRIS */
+        .unduh-qris-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #4A90E2, #357ABD);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(53, 122, 189, 0.4);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .unduh-qris-btn i {
+            font-size: 1.3rem;
+        }
+
+        .unduh-qris-btn:hover {
+            background: linear-gradient(135deg, #357ABD, #4A90E2);
+            box-shadow: 0 6px 15px rgba(53, 122, 189, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .unduh-qris-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 6px rgba(53, 122, 189, 0.4);
+        }
+
+        @media (max-width: 480px) {
+            .unduh-qris-btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo" id="logo-trigger">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <h1>PEMBAYARAN DIGITAL</h1>
+            <p>Pilih metode pembayaran yang Anda inginkan</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="qris">QRIS</button>
+                <button class="tab-btn" data-tab="ewallet">E-WALLET</button>
+            </div>
+        </header>
+        
+        <!-- Tab QRIS -->
+        <div id="qris-tab" class="tab-content active">
+            <h2 class="card-title">PEMBAYARAN QRIS</h2>
+            
+            <div class="qris-container">
+                <div class="qris-code">
+                    <i class="fas fa-qrcode qris-icon"></i>
+                    <div class="qris-text">SCAN QR</div>
+                </div>
+
+<a href="qris-payment.jpg" download="qris-payment.jpg" class="unduh-qris-btn">
+  <i class="fas fa-download"></i> Unduh QRIS
+</a>
+
+                <div class="instructions" style="margin-top: 30px;">
+                    <h3>Cara Pembayaran QRIS:</h3>
+                    <ol>
+                        <li>Buka aplikasi mobile banking atau e-wallet di ponsel Anda</li>
+                        <li>Pilih menu pembayaran QRIS/Scan QR</li>
+                        <li>Arahkan kamera ke kode QR di atas</li>
+                        <li>Masukkan nominal pembayaran sesuai pesanan Anda</li>
+                        <li>Konfirmasi pembayaran dan simpan bukti transaksi</li>
+                        <li>Transaksi selesai dalam 1-2 menit</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tab E-Wallet -->
+        <div id="ewallet-tab" class="tab-content">
+            <h2 class="card-title">PEMBAYARAN E-WALLET</h2>
+            
+            <div class="ewallet-options">
+                <div class="ewallet-btn dana" data-ewallet="dana">
+                    <img src="https://files.catbox.moe/cy9kwm.jpg" alt="DANA" class="ewallet-logo">
+                    <span>DANA</span>
+                </div>
+                
+                <div class="ewallet-btn gopay" data-ewallet="gopay">
+                    <img src="https://img1.pixhost.to/images/6149/605808606_fr3hosting.jpg" alt="GOPAY" class="ewallet-logo">
+                    <span>GOPAY</span>
+                </div>
+                
+                <div class="ewallet-btn ovo" data-ewallet="ovo">
+                    <img src="https://img1.pixhost.to/images/6149/605808607_fr3hosting.jpg" alt="OVO" class="ewallet-logo">
+                    <span>OVO</span>
+                </div>
+                
+                <div class="ewallet-btn bank" data-ewallet="bank">
+                    <img src="https://img1.pixhost.to/images/6149/605808603_fr3hosting.jpg" alt="BANK" class="ewallet-logo">
+                    <span>BANK</span>
+                </div>
+            </div>
+            
+            <div id="payment-details" class="payment-details" style="display: none;">
+                <h3 id="payment-method">DANA</h3>
+                <div class="info-row">
+                    <span class="info-label">Nomor:</span>
+                    <span class="info-value" id="payment-number">085123652653</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Atas Nama:</span>
+                    <span class="info-value" id="payment-name">Nama Pemilik</span>
+                </div>
+                
+                <div class="instructions" style="margin-top: 20px;">
+                    <h3>Cara Transfer:</h3>
+                    <ol>
+                        <li>Buka aplikasi <span id="app-name">DANA</span> di ponsel Anda</li>
+                        <li>Pilih menu "Kirim Uang" atau "Transfer"</li>
+                        <li>Masukkan nomor <span id="payment-number-ref">085123652653</span></li>
+                        <li>Masukkan nominal pembayaran sesuai pesanan Anda</li>
+                        <li>Konfirmasi transfer dan simpan bukti transaksi</li>
+                        <li>Transaksi selesai dalam 1-2 menit</li>
+                    </ol>
+                </div>
+                
+                <button class="copy-btn" id="copy-btn">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Pembayaran Digital | Layanan pembayaran elektronik</p>
+            <p>Butuh bantuan? Hubungi kami di support@paymentdigital.id</p>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification">Nomor berhasil disalin!</div>
+    
+    <div class="cs-button" id="csButton">
+        <i class="fas fa-headset"></i>
+        <div class="cs-tooltip">Butuh Bantuan?</div>
+    </div>
+    
+    <div class="cs-modal" id="csModal">
+        <div class="cs-modal-header">
+            <span>Hubungi Customer Service</span>
+            <span class="cs-modal-close" id="closeModal">&times;</span>
+        </div>
+        <div class="cs-modal-body">
+            <div class="cs-option" onclick="window.open('https://wa.me/6283844381838?text=halo%20bang%20brexxy', '_blank')">
+                <i class="fab fa-whatsapp"></i>
+                <div class="cs-text">
+                    <h4>WhatsApp</h4>
+                    <p>Respon cepat 24/7</p>
+                </div>
+                <div class="arrow">&rsaquo;</div>
+            </div>
+            
+            <div class="cs-option" onclick="window.location.href='mailto:support@ferdi042007@gmail.com'">
+                <i class="fas fa-envelope"></i>
+                <div class="cs-text">
+                    <h4>Email</h4>
+                    <p>support@ferdi042007@gmail.com</p>
+                </div>
+                <div class="arrow">&rsaquo;</div>
+            </div>
+            
+            <div class="cs-option" onclick="window.open('https://t.me/brexxyoffc', '_blank')">
+                <i class="fab fa-telegram"></i>
+                <div class="cs-text">
+                    <h4>Telegram</h4>
+                    <p>Channel dukungan</p>
+                </div>
+                <div class="arrow">&rsaquo;</div>
+            </div>
+            
+            <div class="cs-option" onclick="alert('Live chat sedang tidak tersedia, silakan hubungi kami melalui WhatsApp')">
+                <i class="fas fa-comments"></i>
+                <div class="cs-text">
+                    <h4>Live Chat</h4>
+                    <p>Online sekarang</p>
+                </div>
+                <div class="arrow">&rsaquo;</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk mengganti tab
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                    
+                    document.getElementById('payment-details').style.display = 'none';
+                });
+            });
+            
+            // Data pembayaran
+            const paymentData = {
+                dana: {
+                    number: '085123652653',
+                    name: 'DADI SUKARDI',
+                    app: 'DANA'
+                },
+                gopay: {
+                    number: '085123652653',
+                    name: 'DADI SUKARDI',
+                    app: 'GoPay'
+                },
+                ovo: {
+                    number: '085123652653',
+                    name: 'DADI SUKARDI',
+                    app: 'OVO'
+                },
+                bank: {
+                    number: 'MAINTACE',
+                    name: 'DADI SUKARDI',
+                    app: 'BCA BANK'
+                }
+            };
+            
+            // Fungsi untuk menampilkan detail pembayaran
+            document.querySelectorAll('.ewallet-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const ewalletType = button.getAttribute('data-ewallet');
+                    const data = paymentData[ewalletType];
+                    
+                    document.getElementById('payment-method').textContent = ewalletType.toUpperCase();
+                    document.getElementById('payment-number').textContent = data.number;
+                    document.getElementById('payment-name').textContent = data.name;
+                    document.getElementById('app-name').textContent = data.app;
+                    document.getElementById('payment-number-ref').textContent = data.number;
+                    
+                    document.getElementById('payment-details').style.display = 'block';
+                    document.getElementById('payment-details').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Fungsi untuk menyalin nomor pembayaran
+            document.getElementById('copy-btn').addEventListener('click', () => {
+                const number = document.getElementById('payment-number').textContent;
+                
+                navigator.clipboard.writeText(number).then(() => {
+                    const notification = document.getElementById('notification');
+                    notification.textContent = `Nomor ${number} berhasil disalin!`;
+                    notification.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 2000);
+                });
+            });
+            
+            // Animasi untuk efek neon
+            const neonElements = document.querySelectorAll('.tab-btn, .ewallet-btn, .qris-code, .payment-details, .instructions');
+            neonElements.forEach(element => {
+                element.addEventListener('mouseover', () => {
+                    element.style.boxShadow = '0 0 15px var(--neon-blue)';
+                });
+                
+                element.addEventListener('mouseout', () => {
+                    element.style.boxShadow = '';
+                });
+            });
+            
+            // Customer Service Button Functionality
+            const csButton = document.getElementById('csButton');
+            const csModal = document.getElementById('csModal');
+            const closeModal = document.getElementById('closeModal');
+            
+            csButton.addEventListener('click', function() {
+                csModal.style.display = 'block';
+                csModal.style.animation = 'none';
+                setTimeout(() => {
+                    csModal.style.animation = 'float 1.5s ease-in-out';
+                }, 10);
+            });
+            
+            closeModal.addEventListener('click', function() {
+                csModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === csModal) {
+                    csModal.style.display = 'none';
+                }
+            });
+            
+            // FITUR BARU: Klik logo untuk menampilkan QRIS
+            document.getElementById('logo-trigger').addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector('.tab-btn[data-tab="qris"]').classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                const qrisTab = document.getElementById('qris-tab');
+                qrisTab.classList.add('active');
+                qrisTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                this.style.transform = 'scale(1.2) rotate(10deg)';
+                this.style.textShadow = '0 0 25px var(--neon-blue)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.textShadow = '0 0 10px var(--neon-blue)';
+                }, 500);
+            });
+            
+            // Fungsi untuk unduh QRIS (cara sederhana)
+            document.getElementById('unduh-qris').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Tampilkan notifikasi
+                const notification = document.getElementById('notification');
+                notification.textContent = 'Sedang mengunduh QRIS...';
+                notification.style.display = 'block';
+                
+                // Simulasikan proses unduhan
+                setTimeout(() => {
+                    // Buat elemen sementara untuk unduh
+                    const link = document.createElement('a');
+                    link.href = this.href;
+                    link.download = this.getAttribute('download') || 'qris.jpg';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Update notifikasi
+                    notification.textContent = 'QRIS berhasil diunduh!';
+                    
+                    // Sembunyikan notifikasi setelah 2 detik
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 2000);
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
